@@ -1,0 +1,62 @@
+//---------------------------------
+//--- 010 Editor v2.0.1 Script File
+//
+//      File: DexFixer.1sc
+//   Authors: fei_cong(346345565@qq.com)
+//       Url: https://github.com/feicong/android_re
+//   Version: 1.0
+//   Purpose: fix DEX file sha1 & adler32 value.
+//  Category: Checksum
+//   History:
+//   1.0   2017-03-14 feicong: Initial release.
+//------------------------------------------------
+
+int endian = ReadInt(0x28); //endian_flag
+if (endian == 0x12345678) {
+    LittleEndian();
+} else {
+    BigEndian();
+}
+
+uchar sha1[20];
+ReadBytes(sha1, 0xc, 20);
+
+Printf("src sha1: ");
+uint i=0;
+for (i=0; i<20; i++)
+{
+    Printf("%02x", sha1[i]);
+}
+Printf("\n");
+
+uchar checksum[20];
+ChecksumAlgBytes(CHECKSUM_SHA1, checksum, 0x20);
+
+Printf("calced sha1: ");
+for (i=0; i<20; i++)
+{
+    Printf("%02x", checksum[i]);
+}
+Printf("\n");
+
+
+int adler32 = ReadInt(0x8);
+if (Memcmp(checksum, sha1, 20) != 0) {
+    WriteBytes(checksum, 0xc, 20);
+} else {
+    Printf("same sha1\n");
+}
+
+//uchar adler32_[4];
+//ChecksumAlgBytes(CHECKSUM_ADLER32, adler32_, 0xc);
+int adler32_ = Checksum(CHECKSUM_ADLER32, 0xc);
+Printf("src adler32: %x\n", adler32);
+Printf("calced adler32: %x\n", adler32_);
+
+if (adler32_ != adler32) {
+    WriteInt(0x8, adler32_);
+} else {
+    Printf("same adler32\n");
+}
+
+Printf("Done.\n");
