@@ -2,8 +2,8 @@
 //--- 010 Editor v5.0.2 Binary Template
 //
 //      File: AndroidResource.bt
-//   Authors: lichao(lichao.890427@163.com) 
-//  			 fei_cong(346345565@qq.com)
+//   Authors: lichao, fei_cong
+//    E-mail: lichao.890427@163.com, 346345565@qq.com
 //       Url: https://github.com/feicong/android_re
 //   Version: 1.1
 //   Purpose: Parse AndroidManifest.xml, res/*.xml, and resource.arsc 
@@ -12,7 +12,7 @@
 // File Mask: *.xml,*.arsc
 //  ID Bytes: 03 00, 02 00
 //   History: 
-//   1.1   2017-03-13 feicong: add ResTable_entry & ResTable_map_entry.
+//   1.1   2017-03-13 feicong: add ResTable_entry and ResTable_map_entry.
 //   1.0   2016-07-11 lichao: Initial release.
 //------------------------------------------------
 
